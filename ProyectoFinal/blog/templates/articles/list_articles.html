@@ -1,0 +1,14 @@
+<!--Heredamos la layout-->
+{% extends 'layouts/layout.html' %}
+
+<!--Cargamos el bloque del titulo-->
+{%block title%}{{title}}{%endblock%}
+
+<!--Cargamos el bloque del contenido html-->
+{% block  content%}
+    <h1 class='title'>{{title}}</h1>
+    
+    {% include 'articles/articulos.html' %}
+
+    {% include 'articles/pagination.html' %}
+{% endblock  %}

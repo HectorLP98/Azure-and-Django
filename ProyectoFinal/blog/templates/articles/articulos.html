@@ -1,0 +1,42 @@
+<!--Itero sobre los articulos-->
+{% for articulo in articles%}
+<div class='article-item'>
+        <!--Revisamos que exista una imagen-->
+        {% if articulo.image != 'null'%}
+            <!--En caso de existir la mostramos-->
+            <div class='image'>
+                <img src="{{articulo.image.url}}"/>
+            </div>
+        {% endif %}
+
+        <div class='content'>
+
+            <h4>
+                <!--Metemos link para cada articulo-->
+                <a href="{% url 'articulo' articulo.id%}">
+                    {{articulo.title}}
+                </a>
+            </h4>
+
+            </br>
+            <!--Muestro todas las categorias que tenga-->
+            <p>
+            {%for category in articulo.categories.all%}
+                <!--Muestro la categoria, que estaran anidadas por un guion.-->
+                {{category}}
+                <!--forloop.counter es la variable que tiene el contador del for.-->
+                {% if forloop.counter < articulo.categories.all|length%}
+                    {{' | '}}
+                {% endif %}
+        
+            {%endfor%}
+            
+            </p>
+            <div>Se prueba:   {{articulo.user}}</div>
+
+            <p>{{articulo.content|safe}}</p>
+
+            
+        </div>
+</div>
+{% endfor%}

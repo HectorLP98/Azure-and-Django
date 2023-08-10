@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        
+        <title>
+            {% block  title%}
+            <!--Codigo que viene de templates-->
+            {% endblock  %}
+            | Hector Limon
+        </title>
+        
+        <!--Cargamos la carpeta static para leer los estilos css-->
+        {% load static %}
+        <!--Metemos el estilo css del archivo particular-->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+
+    </head>
+
+    <body>
+        <header>
+            <div id="logotipo">
+                <!--Cargamos el logotipo-->
+                <img src="{% static 'images/logo.png' %}"/>
+
+                <h1> Proyecto con Django </h1>
+            </div>
+        </header>
+        <!--Linea horizontal separadora-->
+        
+
+        <!--Usamos nav para meter el menu-->
+        {%comment%}
+        LA manera mas performante de meter los urls es;
+        {% url 'nombre_del_url' parametro1=valor1 valor2 valorn%}
+        {%endcomment%}
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'index'%}">Home</a>
+                </li>
+               <!--
+                Iteramos la variable pages, que sale de nuestro context process para visualizar
+                todas las paginas que hemos creado en el menu.
+                Se mostraran solo en caso de que el usuario este logeado.
+                Para eso, reviso la variable user y accedo  a un atributo, en caso de estar logeado
+                el atributo debe existir. Estos atributos son del modelo User.
+               -->
+                {% if user.email %}
+                    {% for page in pages %}
+                        <li>
+                            <!--
+                                Como page es una tupla, para acceder al elemento 2 se pone el ".1"
+                                Ademas le paso el parametro slug al url para cargar la pagina adecuada
+                            -->
+                            <a href="{% url 'page' page.2%}">{{page.1}}</a>
+                        </li>
+                    {%endfor%}
+
+                    <li>
+                        <a href="{% url 'logout'%}">Logout</a>
+                    </li>
+
+                {% else %}
+                    <li>
+                        <a href="{% url 'register'%}">Registro</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'login'%}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </nav>
+
+        <!--Ramas para poder hacer el modelado 3D-->
+        <div class="barra">
+            <span class="esq-iz"></span>
+            <span class="relleno-barra"></span>
+            <span class="esq-de"></span>
+        </div>
+        
+        {% comment "" %}
+            <!--Linea horizontal separadora-->
+            <hr/>
+        {% endcomment %}
+        <!--Tag donde cargare las plantillas usando herencia-->
+        <div id='content'>
+            <div class="box">
+                <!--<h2 class="title">Titulo de Prueba</h2>-->
+                {% block  content%}
+                <!--Codigo que viene de templates-->
+                <strong>Contenido del bloque layout!!</strong>
+                {% endblock  %}
+            </div>
+        </div>
+
+        <hr/>
+        <footer>
+            {% comment "" %}
+                PAra meter la hora y fecha es muy simple el comando es:
+                {% now 'd/m/Y h:m:s'%}
+            {% endcomment %}
+            Master en Python &copy; Hector Limon P. {% now 'd/m/Y '%}
+        </footer>
+    </body>
+
+</html>

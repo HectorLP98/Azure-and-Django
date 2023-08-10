@@ -1,0 +1,37 @@
+<!--Heredamos la layout-->
+{% extends 'layouts/layout.html' %}
+
+<!--Cargamos el bloque del titulo-->
+{%block title%}{{title}}{%endblock%}
+
+<!--Cargamos el bloque del contenido html-->
+{% block  content%}
+    <h1>{{title}}</h1>
+</hr>
+    <!--Reviso si hay mensajes que mostrar-->
+    {% if messages %}
+        <!--Itero para mostrar todos los mensajes que existan-->
+        {% for message in messages  %}
+            <div class='alert alert-success'>
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!--
+        Revisamos si hay un usuario logeado
+        Para eso, reviso la variable user y accedo  a un atributo, en caso de estar logeado
+        el atributo debe existir. Estos atributos son del modelo User.
+    -->
+    {% if user.email %}
+        <h2>Bienvenido {{request.user.first_name}}</h2>
+        </br>
+        <p>Siembra buenas acciones, y recogerás el fruto de ellas.</p>
+        <div>- Helena Blavatsky</div>
+    {% else %}
+        </br>
+        <p>Cuando es obvio que no se pueden alcanzar los objetivos, no ajuste los objetivos, ajuste los pasos de acción.</p>
+        <div>- Confusio</div>
+    {% endif %}
+
+{% endblock  %}

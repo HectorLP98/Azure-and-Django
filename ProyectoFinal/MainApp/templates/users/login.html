@@ -1,0 +1,40 @@
+<!--Heredamos la layout-->
+{% extends 'layouts/layout.html' %}
+
+<!--Cargamos el bloque del titulo-->
+{%block title%}{{title}}{%endblock%}
+
+<!--Cargamos el bloque del contenido html-->
+{% block  content%}
+    <h1>{{title}}</h1>
+    
+    <!--Reviso si hay mensajes que mostrar-->
+    {% if messages %}
+        <!--Itero para mostrar todos los mensajes que existan-->
+        {% for message in messages  %}
+            <div class='alert alert-warning'>
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!--Mostrar los errores en caso de tener-->
+    {{register_form.errors}}
+
+    <!--Mostramos el formulario de login-->
+    <form method='post' action=''>
+        {% csrf_token %}
+
+        <label for="username">Nombre de usuario</label>
+    </br>
+        <input type="text" name="username"/>
+    </br>
+
+        <label for="password">Contraseña</label>
+    </br>
+        <input type="password" name="password"/>
+    </br>
+
+        <input type="submit" value="login"/>
+    </form>
+{% endblock  %}

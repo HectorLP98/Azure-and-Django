@@ -1,0 +1,23 @@
+<!--Heredamos la layout-->
+{% extends 'layouts/layout.html' %}
+
+<!--Cargamos el bloque del titulo-->
+{%block title%}{{article.title}}{%endblock%}
+
+<!--Cargamos el bloque del contenido html-->
+{% block  content%}
+    <!--Revisamos que exista una imagen-->
+    {% if article.image != 'null'%}
+        <!--En caso de existir la mostramos-->
+        <div class='image'>
+            <img src="{{article.image.url}}"/>
+        </div>
+    {% endif %}
+    <h1 class='title'>{{article.title}}</h1>
+    <span class='date'>{{article.created_at}}</span>
+    <p class='content'>
+        <!--incluir "|safe" hace que se interprete todo el texto adecuademente 
+        como las negritas, cursivas, etc.-->
+        {{article.content|safe}}
+    </p>
+{% endblock  %}
